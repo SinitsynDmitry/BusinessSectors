@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  businesssectors.server:
+    image: ${DOCKER_REGISTRY-}businesssectorsserver
+    build:
+      context: .
+      dockerfile: BusinessSectors.Server/Dockerfile
+    container_name: business-sectors-app
+    volumes:
+      - ./config:/app/config:ro
+    depends_on:
+      - db
+    networks:
+      - backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - SectorsConfigPath=/app/config/sectors-config.json
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=sectorsDb;Username=postgres;Password=KJKkjk123
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+
+  db:
+    image: postgres:16.8
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_DB: sectorsDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: KJKkjk123
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
+volumes:
+  pgdata:
+
+networks:
+  backend:
+    driver: bridge
+

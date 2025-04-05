@@ -1,0 +1,22 @@
+<h1 id="tableLabel">Sectors</h1>
+
+<p *ngIf="!sectors"><em>Loading...</em></p>
+
+<table *ngIf="sectors">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Temp. (C)</th>
+      <th>Temp. (F)</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sector of sectors">
+      <td>{{ sector.id }}</td>
+      <td>{{ sector.name }}</td>
+      <td>{{ sector.path }}</td>
+      <td>{{ sector.isSelected }}</td>
+    </tr>
+  </tbody>
+</table>
