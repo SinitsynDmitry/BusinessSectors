@@ -5,11 +5,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SectorsComponent } from './components/sectors/sectors.component';
+import { SectorsTreeComponent } from './components/sectors-tree/sectors-tree.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SectorsComponent
+    SectorsComponent,
+    SectorsTreeComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

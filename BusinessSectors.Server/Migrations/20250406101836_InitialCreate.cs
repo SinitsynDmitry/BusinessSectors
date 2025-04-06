@@ -18,7 +18,8 @@ namespace BusinessSectors.Server.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Path = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false)
+                    Path = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    Order = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

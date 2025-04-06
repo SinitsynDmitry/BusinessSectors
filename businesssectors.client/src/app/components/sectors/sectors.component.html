@@ -1,22 +1,38 @@
-<h1 id="tableLabel">Sectors</h1>
 
 <p *ngIf="!sectors"><em>Loading...</em></p>
 
-<table *ngIf="sectors">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let sector of sectors">
-      <td>{{ sector.id }}</td>
-      <td>{{ sector.name }}</td>
-      <td>{{ sector.path }}</td>
-      <td>{{ sector.isSelected }}</td>
-    </tr>
-  </tbody>
-</table>
+<div *ngIf="sectors" class="container">
+  <form class="sectors-form">
+    <mat-form-field class="form-field-full-width">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput [formControl]="nameFormControl" placeholder="Enter name">
+      @if (nameFormControl.hasError('required')) {
+      <mat-error>Name is <strong>required!</strong></mat-error>
+      }
+    </mat-form-field>
+
+    <mat-label style="text-align: left; display: block; margin-top: 10px;">Sectors:</mat-label>
+    <div class="config-options">
+      <mat-checkbox [(ngModel)]="selectChildrenWithParent">
+        Select children when parent is selected
+      </mat-checkbox>
+    </div>
+    <div class="border rounded tree">
+      <app-sectors-tree [sectorNodes]="sectorNodes"
+                        [selectChildrenWithParent]="selectChildrenWithParent"
+                        [selectParentWithChildren]="selectChildrenWithParent"
+                        [showIndeterminateState]="selectChildrenWithParent"
+                        (selectedIdsChange)="onSelectedIdsChange($event)">
+      </app-sectors-tree>
+    </div>
+    <div class="buttons">
+      <button color="accent" mat-flat-button (click)="onRestore()">Restore</button>
+      <button color="primary" mat-flat-button (click)="onSave()">Save</button>
+    </div>
+  </form>
+
+  <!--<div class="selected-info" *ngIf="selectedIds.length > 0">
+    <h3>Selected Sector IDs:</h3>
+    <p>{{ selectedIds.join(', ') }}</p>
+  </div>-->
+</div>

@@ -13,5 +13,7 @@ public class SectorDto
     [Required]
     public string Path { get; set; }  // e.g. "1/6/342"
 
+    public int Order { get; set; }
+
     public bool IsSelected { get; set; }
 }

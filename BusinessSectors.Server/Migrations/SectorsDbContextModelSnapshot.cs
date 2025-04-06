@@ -34,6 +34,9 @@ namespace BusinessSectors.Server.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasMaxLength(1000)

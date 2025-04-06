@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BusinessSectors.Server.Migrations
 {
     [DbContext(typeof(SectorsDbContext))]
-    [Migration("20250405184935_InitialCreate")]
+    [Migration("20250406101836_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -36,6 +36,9 @@ namespace BusinessSectors.Server.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Path")
                         .IsRequired()

@@ -19,6 +19,8 @@ public class SectorsDbContext : DbContext
         {
             entity.HasKey(s => s.Id);
 
+            entity.Property(s => s.Order);
+
             entity.Property(s => s.Name).IsRequired().HasMaxLength(255);
 
             entity.Property(s => s.Path).IsRequired().HasMaxLength(1000); // Adjust based on max expected depth

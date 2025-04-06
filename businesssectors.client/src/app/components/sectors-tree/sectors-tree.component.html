@@ -1,0 +1,19 @@
+
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+    <mat-checkbox [checked]="checklistSelection.isSelected(node)"
+                  (change)="sectorLeafItemSelectionToggle(node)">
+      {{node.name}}
+    </mat-checkbox>
+  </mat-tree-node>
+
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+    <mat-checkbox [checked]="checklistSelection.isSelected(node)"
+                  [indeterminate]="descendantsPartiallySelected(node)"
+                  (change)="sectorItemSelectionToggle(node)">
+      {{node.name}}
+    </mat-checkbox>
+  </mat-tree-node>
+</mat-tree>

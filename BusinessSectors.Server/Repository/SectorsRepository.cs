@@ -17,27 +17,22 @@ public class SectorsRepository : ISectorsRepository
     {
 
         var sectorsQuery = _context.Sectors.AsNoTracking();
+        var sectors = await sectorsQuery.ToListAsync();
 
         // Return all sectors if no user specified
         if (string.IsNullOrWhiteSpace(userName))
         {
-            return await sectorsQuery.ToListAsync();
+            return sectors;
         }
 
         // Execute both queries in parallel
-        var userSectorsIdsTask = _context.UserSectors
+        var sectorsIdsString = await _context.UserSectors
             .AsNoTracking()
             .Where(u => u.Name == userName)
             .Select(u => u.SectorsIds)
             .FirstOrDefaultAsync();
 
-        var sectorsTask = sectorsQuery.ToListAsync();
-
-        await Task.WhenAll(userSectorsIdsTask, sectorsTask);
-
-        var sectorsIdsString = await userSectorsIdsTask;
-        var sectors = await sectorsTask;
-
+        
 
         if (string.IsNullOrWhiteSpace(sectorsIdsString))
         {
