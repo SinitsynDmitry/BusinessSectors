@@ -144,7 +144,7 @@ export class AdminComponent implements OnInit {
     // Open edit dialog for the new node
     this.editNodeName({ ...newNode, level: node.level, expandable: false });
     this.addedSectorNodes.push(newNode);
-    console.log("new node renamed", newNode);
+
     this.treeControl.expandAll();
   }
 
@@ -180,17 +180,21 @@ export class AdminComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const oldName = node.name;
-        // Update node name in the tree structure
-        this.updateNodeNameInTree(this.currentSectorNodes, node.path, result);
-        this.dataSource.data = [...this.currentSectorNodes];
-        this.showSuccess(`"${oldName}" renamed to "${result}"`);
-        this.treeControl.expandAll();
+        if (result != oldName) {
+          // Update node name in the tree structure
+          this.updateNodeNameInTree(this.currentSectorNodes, node.path, result);
+          this.dataSource.data = [...this.currentSectorNodes];
+          this.showSuccess(`"${oldName}" renamed to "${result}"`);
+          this.treeControl.expandAll();
+        }
       }
     });
   }
 
   // Helper method to add a node to the tree
   private addNodeToTree(nodes: SectorNode[], parentPath: string, newNode: SectorNode) {
+
+    console.log("parentPath", parentPath);
     if (parentPath === '') {
       // Add to root level
       nodes.push(newNode);
@@ -199,16 +203,22 @@ export class AdminComponent implements OnInit {
 
     for (const node of nodes) {
       if (node.path === parentPath + '/') {
+        console.log("Found parent node", node);
         // Found parent node
         if (!node.children) {
           node.children = [];
         }
         node.children.push(newNode);
+        console.log("inserted", node);
         return;
       }
-
-      if (node.children && node.path.startsWith(parentPath.substring(0, parentPath.lastIndexOf('/')))) {
+      let length = Math.min(node.path.length, parentPath.lastIndexOf('/'));
+      console.log("node.path.startsWith", parentPath.substring(0, length));
+      if (node.children && node.path.startsWith(parentPath.substring(0, length))) {
+        console.log("try", node);
         this.addNodeToTree(node.children, parentPath, newNode);
+      } else {
+        console.log("ignored", node);
       }
     }
   }

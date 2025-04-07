@@ -39,12 +39,9 @@ namespace BusinessSectors.Server.Migrations
 
                     b.Property<string>("Path")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Path");
 
                     b.ToTable("Sectors");
                 });
@@ -67,8 +64,6 @@ namespace BusinessSectors.Server.Migrations
                         .HasColumnType("character varying(1000)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name");
 
                     b.ToTable("UserSectors");
                 });

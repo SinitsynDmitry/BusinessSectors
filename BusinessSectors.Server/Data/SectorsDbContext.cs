@@ -13,34 +13,34 @@ public class SectorsDbContext : DbContext
 
     public DbSet<UserSectors> UserSectors { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Sector>(entity =>
-        {
-            entity.HasKey(s => s.Id);
+    //protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //{
+    //    modelBuilder.Entity<Sector>(entity =>
+    //    {
+    //        entity.HasKey(s => s.Id);
 
-            entity.Property(s => s.Id).ValueGeneratedOnAdd();
+    //        entity.Property(s => s.Id).ValueGeneratedOnAdd();
 
-            entity.Property(s => s.Order);
+    //        entity.Property(s => s.Order);
 
-            entity.Property(s => s.Name).IsRequired().HasMaxLength(255);
+    //        entity.Property(s => s.Name).IsRequired().HasMaxLength(255);
 
-            entity.Property(s => s.Path).IsRequired().HasMaxLength(1000); // Adjust based on max expected depth
+    //        entity.Property(s => s.Path).IsRequired().HasMaxLength(1000); // Adjust based on max expected depth
 
-            // Index for faster path-based queries
-            entity.HasIndex(s => s.Path);
-        });
+    //        // Index for faster path-based queries
+    //        entity.HasIndex(s => s.Path);
+    //    });
 
-        modelBuilder.Entity<UserSectors>(entity =>
-        {
-            entity.HasKey(s => s.Id);
+    //    modelBuilder.Entity<UserSectors>(entity =>
+    //    {
+    //        entity.HasKey(s => s.Id);
 
-            entity.Property(s => s.Name).IsRequired().HasMaxLength(255);
+    //        entity.Property(s => s.Name).IsRequired().HasMaxLength(255);
 
-            entity.Property(s => s.SectorsIds).HasMaxLength(1000); // Adjust based on max expected depth
+    //        entity.Property(s => s.SectorsIds).HasMaxLength(1000); // Adjust based on max expected depth
 
-            entity.HasIndex(s => s.Name);
-        });
+    //        entity.HasIndex(s => s.Name);
+    //    });
 
-    }
+    //}
 }

@@ -27,6 +27,10 @@
   visibility: hidden;
 }
 
+mat-tree-node:hover {
+  background-color:lightgreen;
+}
+
 mat-tree-node:hover .node-actions {
   visibility: visible;
 }

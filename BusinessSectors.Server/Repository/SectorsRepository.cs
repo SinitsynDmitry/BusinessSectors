@@ -35,7 +35,7 @@ public class SectorsRepository : ISectorsRepository
             {
                 var entity = new Sector
                 {
-                    Id = -1, // New ID will be generated
+                    //Id = -1 * (addedSectors.Count+1), // New ID will be generated
                     Name = incoming.Name,
                     Path = incoming.Path,
                     Order = incoming.Order
@@ -44,7 +44,7 @@ public class SectorsRepository : ISectorsRepository
                 await _context.Sectors.AddAsync(entity);
                 await _context.SaveChangesAsync(); // Get new ID
 
-                if (incoming.Id != 0)
+                //if (incoming.Id != 0)
                     idMapping[incoming.Id] = entity.Id;
 
                 addedSectors.Add((incoming, entity));
