@@ -29,4 +29,28 @@ public static class Mapping
                 : null
         };
     }
+
+    public static SectorDto ToDto(this Sector entity)
+    {
+        return new SectorDto
+        {
+            Id = entity.Id,
+            Name = entity.Name,
+            Order = entity.Order,
+            Path = entity.Path,
+            IsSelected = entity.IsSelected
+        };
+    }
+
+    public static Sector ToEntity(this SectorDto dto)
+    {
+        return new Sector
+        {
+            Id = dto.Id,
+            Name = dto.Name,
+            Order = dto.Order,
+            Path = dto.Path,
+            IsSelected = dto.IsSelected
+        };
+    }
 }

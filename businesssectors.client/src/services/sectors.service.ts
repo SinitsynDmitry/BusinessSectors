@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
- interface Sector {
+ export interface Sector {
   id: number;
   name: string;
   path: string;
@@ -39,6 +39,10 @@ export class SectorsService {
     return this.http.get<Sector[]>(apiUrl).pipe(
       map((sectors: Sector[]) => this.convertSectorsToSectorNodes(sectors))
     );
+  }
+
+  saveSectors(sectors: Sector[]): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}`,  sectors );
   }
 
   private convertSectorsToSectorNodes(sectors: Sector[]): SectorNode[] {

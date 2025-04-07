@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { SectorsComponent } from './components/sectors/sectors.component';
 import { SectorsTreeComponent } from './components/sectors-tree/sectors-tree.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SectorsComponent,
     SectorsTreeComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

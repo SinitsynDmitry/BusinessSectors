@@ -1,4 +1,5 @@
-﻿using BusinessSectors.Server.DTOs;
+﻿using Azure.Core;
+using BusinessSectors.Server.DTOs;
 using BusinessSectors.Server.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,5 +21,12 @@ public class SectorsController : ControllerBase
     {
         var sectors = await _repository.GetSectorsAsync(userId);
         return Ok(sectors);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateSectors([FromBody] IEnumerable<SectorDto> sectors)
+    {
+        await _repository.UpdateSectorsAsync(sectors.Select(s=>s.ToEntity()));
+        return NoContent();
     }
 }

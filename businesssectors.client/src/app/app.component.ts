@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SectorsComponent } from './components/sectors/sectors.component';
 
 @Component({
@@ -7,11 +8,12 @@ import { SectorsComponent } from './components/sectors/sectors.component';
   standalone: true,
   styleUrl: './app.component.css',
   imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
     SectorsComponent
   ]
 })
 export class AppComponent {
-
   title = 'Business Sectors';
-
 }

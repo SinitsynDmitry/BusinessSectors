@@ -1,5 +1,14 @@
 
+<header class="navbar">
+  <div class="navbar-container">
+    <h1 class="navbar-brand">{{ title }}</h1>
+    <nav class="navbar-nav">
+      <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Sectors</a>
+      <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+    </nav>
+  </div>
+</header>
+
 <div class="container">
-  <h1>{{ title }}</h1>
-  <app-sectors></app-sectors>
+  <router-outlet></router-outlet>
 </div>

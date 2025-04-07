@@ -1,0 +1,45 @@
+
+:host {
+  text-align: start;
+}
+
+.tree {
+  margin-top: 15px;
+  padding: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+
+.node-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.node-name {
+  flex-grow: 1;
+}
+
+.node-actions {
+  display: flex;
+  visibility: hidden;
+}
+
+mat-tree-node:hover .node-actions {
+  visibility: visible;
+}
+
+.action-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.button-with-spinner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

@@ -42,7 +42,7 @@
   border: 1px solid #ccc;
 }
 
-.buttons {
+.action-buttons {
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;

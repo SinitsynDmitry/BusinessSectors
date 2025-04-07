@@ -1,0 +1,40 @@
+<div *ngIf="isLoading" class="loading-container">
+  <mat-spinner diameter="40"></mat-spinner>
+  <p>Loading sectors...</p>
+</div>
+
+<div *ngIf="!isLoading" class="border rounded tree">
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <!-- Single template for all nodes (no expansion) -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <div class="node-content">
+        <span class="node-name">{{node.name}}</span>
+        <div class="node-actions">
+          <button mat-icon-button (click)="addNewNode(node)">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteNode(node)">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <button mat-icon-button (click)="editNodeName(node)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-tree-node>
+  </mat-tree>
+</div>
+
+<div class="action-buttons">
+  <button mat-raised-button color='primary' (click)="restoreSectors()" [disabled]="isLoading || isSaving">
+    Restore
+  </button>
+
+  <button mat-flat-button color='primary' (click)="saveSectors()" [disabled]="isLoading || isSaving">
+    <span *ngIf="!isSaving">Save</span>
+    <span *ngIf="isSaving" class="button-with-spinner">
+      <mat-spinner diameter="20"></mat-spinner>
+      Saving...
+    </span>
+  </button>
+</div>

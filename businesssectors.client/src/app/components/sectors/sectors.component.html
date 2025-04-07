@@ -1,4 +1,4 @@
-<!-- sectors.component.html -->
+
 <div *ngIf="isLoading" class="loading-container">
   <mat-spinner diameter="40"></mat-spinner>
   <p>Loading sectors...</p>
@@ -46,7 +46,7 @@
         </mat-checkbox>
       </div>
 
-      <div class="buttons">
+      <div class="action-buttons">
         <button mat-raised-button color='primary' (click)="onRestore()" [disabled]="isLoading || isSaving">
           Restore
         </button>
