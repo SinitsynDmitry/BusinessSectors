@@ -5,9 +5,9 @@ namespace BusinessSectors.Server.DTOs;
 
 public static class Mapping
 {
-    public static UserSectorsDTO ToDto(this UserSectors userSectors)
+    public static UserSectorsDto ToDto(this UserSectors userSectors)
     {
-        return new UserSectorsDTO
+        return new UserSectorsDto
         {
             Id = userSectors.Id,
             Name = userSectors.Name,
@@ -18,7 +18,7 @@ public static class Mapping
         };
     }
 
-    public static UserSectors ToEntity(this UserSectorsDTO dto)
+    public static UserSectors ToEntity(this UserSectorsDto dto)
     {
         return new UserSectors
         {

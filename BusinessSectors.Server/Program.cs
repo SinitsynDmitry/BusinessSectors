@@ -37,6 +37,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<ISectorsRepository, SectorsRepository>();
+builder.Services.AddScoped<IUserSectorsRepository, UserSectorsRepository>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

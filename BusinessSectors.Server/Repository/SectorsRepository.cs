@@ -13,14 +13,14 @@ public class SectorsRepository : ISectorsRepository
         _context = context;
     }
 
-    public async ValueTask<IEnumerable<Sector>> GetSectorsAsync(string? userName)
+    public async ValueTask<IEnumerable<Sector>> GetSectorsAsync(int? userId)
     {
 
         var sectorsQuery = _context.Sectors.AsNoTracking();
         var sectors = await sectorsQuery.ToListAsync();
 
         // Return all sectors if no user specified
-        if (string.IsNullOrWhiteSpace(userName))
+        if (userId is null || userId < 1)
         {
             return sectors;
         }
@@ -28,11 +28,9 @@ public class SectorsRepository : ISectorsRepository
         // Execute both queries in parallel
         var sectorsIdsString = await _context.UserSectors
             .AsNoTracking()
-            .Where(u => u.Name == userName)
+            .Where(u => u.Id == userId)
             .Select(u => u.SectorsIds)
             .FirstOrDefaultAsync();
-
-        
 
         if (string.IsNullOrWhiteSpace(sectorsIdsString))
         {

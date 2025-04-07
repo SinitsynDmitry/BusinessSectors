@@ -1,4 +1,4 @@
-@BusinessSectors.Server_HostAddress = http://localhost:5151
+@BusinessSectors.Server_HostAddress = https://localhost:7173
 
 GET {{BusinessSectors.Server_HostAddress}}/weatherforecast/
 Accept: application/json
@@ -6,5 +6,20 @@ Accept: application/json
 ###
 
 GET {{BusinessSectors.Server_HostAddress}}/api/sectors
+
+###
+
+@id=0
+PUT {{BusinessSectors.Server_HostAddress}}/api/usersectors/{{id}}
+Content-Type: application/json
+
+{
+  //UpdateUserSectorsRequest
+}
+
+###
+
+@name=string
+GET {{BusinessSectors.Server_HostAddress}}/api/usersectors/Dmitry
 
 ###

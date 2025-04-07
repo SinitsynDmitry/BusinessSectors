@@ -3,5 +3,5 @@
 namespace BusinessSectors.Server.Repository;
 public interface ISectorsRepository
 {
-    ValueTask<IEnumerable<Sector>> GetSectorsAsync(string? userName);
+    ValueTask<IEnumerable<Sector>> GetSectorsAsync(int? userId);
 }

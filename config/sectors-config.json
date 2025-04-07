@@ -3,475 +3,475 @@
     {
       "Id": 1,
       "Name": "Manufacturing",
-      "Path": "1",
+      "Path": "/1/",
       "Order": 5
     },
     {
       "Id": 19,
       "Name": "Construction materials",
-      "Path": "1/19",
+      "Path": "/1/19/",
       "Order": 5
     },
     {
       "Id": 18,
       "Name": "Electronics and Optics",
-      "Path": "1/18",
+      "Path": "/1/18/",
       "Order": 10
     },
     {
       "Id": 6,
       "Name": "Food and Beverage",
-      "Path": "1/6",
+      "Path": "/1/6/",
       "Order": 15
     },
     {
       "Id": 342,
       "Name": "Bakery & confectionery products",
-      "Path": "1/6/342",
+      "Path": "/1/6/342/",
       "Order": 5
     },
     {
       "Id": 43,
       "Name": "Beverages",
-      "Path": "1/6/43",
+      "Path": "/1/6/43/",
       "Order": 10
     },
     {
       "Id": 42,
       "Name": "Fish & fish products",
-      "Path": "1/6/42",
+      "Path": "/1/6/42/",
       "Order": 15
     },
     {
       "Id": 40,
       "Name": "Meat & meat products",
-      "Path": "1/6/40",
+      "Path": "/1/6/40/",
       "Order": 20
     },
     {
       "Id": 39,
       "Name": "Milk & dairy products",
-      "Path": "1/6/39",
+      "Path": "/1/6/39/",
       "Order": 25
     },
     {
       "Id": 437,
       "Name": "Other",
-      "Path": "1/6/437",
+      "Path": "/1/6/437/",
       "Order": 30
     },
     {
       "Id": 378,
       "Name": "Sweets & snack food",
-      "Path": "1/6/378",
+      "Path": "/1/6/378/",
       "Order": 35
     },
     {
       "Id": 13,
       "Name": "Furniture",
-      "Path": "1/13",
+      "Path": "/1/13/",
       "Order": 20
     },
     {
       "Id": 389,
       "Name": "Bathroom/sauna",
-      "Path": "1/13/389",
+      "Path": "/1/13/389/",
       "Order": 5
     },
     {
       "Id": 385,
       "Name": "Bedroom",
-      "Path": "1/13/385",
+      "Path": "/1/13/385/",
       "Order": 10
     },
     {
       "Id": 390,
       "Name": "Children's room",
-      "Path": "1/13/390",
+      "Path": "/1/13/390/",
       "Order": 15
     },
     {
       "Id": 98,
       "Name": "Kitchen",
-      "Path": "1/13/98",
+      "Path": "/1/13/98/",
       "Order": 20
     },
     {
       "Id": 101,
       "Name": "Living room",
-      "Path": "1/13/101",
+      "Path": "/1/13/101/",
       "Order": 25
     },
     {
       "Id": 392,
       "Name": "Office",
-      "Path": "1/13/392",
+      "Path": "/1/13/392/",
       "Order": 30
     },
     {
       "Id": 394,
       "Name": "Other (Furniture)",
-      "Path": "1/13/394",
+      "Path": "/1/13/394/",
       "Order": 35
     },
     {
       "Id": 341,
       "Name": "Outdoor",
-      "Path": "1/13/341",
+      "Path": "/1/13/341/",
       "Order": 40
     },
     {
       "Id": 99,
       "Name": "Project furniture",
-      "Path": "1/13/99",
+      "Path": "/1/13/99/",
       "Order": 45
     },
     {
       "Id": 12,
       "Name": "Machinery",
-      "Path": "1/12",
+      "Path": "/1/12/",
       "Order": 25
     },
     {
       "Id": 94,
       "Name": "Machinery components",
-      "Path": "1/12/94",
+      "Path": "/1/12/94/",
       "Order": 5
     },
     {
       "Id": 91,
       "Name": "Machinery equipment/tools",
-      "Path": "1/12/91",
+      "Path": "/1/12/91/",
       "Order": 10
     },
     {
       "Id": 224,
       "Name": "Manufacture of machinery",
-      "Path": "1/12/224",
+      "Path": "/1/12/224/",
       "Order": 15
     },
     {
       "Id": 97,
       "Name": "Maritime",
-      "Path": "1/12/97",
+      "Path": "/1/12/97/",
       "Order": 20
     },
     {
       "Id": 271,
       "Name": "Aluminium and steel workboats",
-      "Path": "1/12/97/271",
+      "Path": "/1/12/97/271/",
       "Order": 5
     },
     {
       "Id": 269,
       "Name": "Boat/Yacht building",
-      "Path": "1/12/97/269",
+      "Path": "/1/12/97/269/",
       "Order": 10
     },
     {
       "Id": 230,
       "Name": "Ship repair and conversion",
-      "Path": "1/12/97/230",
+      "Path": "/1/12/97/230/",
       "Order": 15
     },
     {
       "Id": 93,
       "Name": "Metal structures",
-      "Path": "1/12/93",
+      "Path": "/1/12/93/",
       "Order": 25
     },
     {
       "Id": 508,
       "Name": "Other",
-      "Path": "1/12/508",
+      "Path": "/1/12/508/",
       "Order": 30
     },
     {
       "Id": 227,
       "Name": "Repair and maintenance service",
-      "Path": "1/12/227",
+      "Path": "/1/12/227/",
       "Order": 35
     },
     {
       "Id": 11,
       "Name": "Metalworking",
-      "Path": "1/11",
+      "Path": "/1/11/",
       "Order": 30
     },
     {
       "Id": 67,
       "Name": "Construction of metal structures",
-      "Path": "1/11/67",
+      "Path": "/1/11/67/",
       "Order": 5
     },
     {
       "Id": 263,
       "Name": "Houses and buildings",
-      "Path": "1/11/263",
+      "Path": "/1/11/263/",
       "Order": 10
     },
     {
       "Id": 267,
       "Name": "Metal products",
-      "Path": "1/11/267",
+      "Path": "/1/11/267/",
       "Order": 15
     },
     {
       "Id": 542,
       "Name": "Metal works",
-      "Path": "1/11/542",
+      "Path": "/1/11/542/",
       "Order": 20
     },
     {
       "Id": 75,
       "Name": "CNC-machining",
-      "Path": "1/11/542/75",
+      "Path": "/1/11/542/75/",
       "Order": 5
     },
     {
       "Id": 62,
       "Name": "Forgings, Fasteners",
-      "Path": "1/11/542/62",
+      "Path": "/1/11/542/62/",
       "Order": 10
     },
     {
       "Id": 69,
       "Name": "Gas, Plasma, Laser cutting",
-      "Path": "1/11/542/69",
+      "Path": "/1/11/542/69/",
       "Order": 15
     },
     {
       "Id": 66,
       "Name": "MIG, TIG, Aluminum welding",
-      "Path": "1/11/542/66",
+      "Path": "/1/11/542/66/",
       "Order": 20
     },
     {
       "Id": 9,
       "Name": "Plastic and Rubber",
-      "Path": "1/9",
+      "Path": "/1/9/",
       "Order": 35
     },
     {
       "Id": 54,
       "Name": "Packaging",
-      "Path": "1/9/54",
+      "Path": "/1/9/54/",
       "Order": 5
     },
     {
       "Id": 556,
       "Name": "Plastic goods",
-      "Path": "1/9/556",
+      "Path": "/1/9/556/",
       "Order": 10
     },
     {
       "Id": 559,
       "Name": "Plastic processing technology",
-      "Path": "1/9/559",
+      "Path": "/1/9/559/",
       "Order": 15
     },
     {
       "Id": 55,
       "Name": "Blowing",
-      "Path": "1/9/559/55",
+      "Path": "/1/9/559/55/",
       "Order": 5
     },
     {
       "Id": 57,
       "Name": "Moulding",
-      "Path": "1/9/559/57",
+      "Path": "/1/9/559/57/",
       "Order": 10
     },
     {
       "Id": 53,
       "Name": "Plastics welding and processing",
-      "Path": "1/9/559/53",
+      "Path": "/1/9/559/53/",
       "Order": 15
     },
     {
       "Id": 560,
       "Name": "Plastic profiles",
-      "Path": "1/9/560",
+      "Path": "/1/9/560/",
       "Order": 20
     },
     {
       "Id": 5,
       "Name": "Printing",
-      "Path": "1/5",
+      "Path": "/1/5/",
       "Order": 40
     },
     {
       "Id": 148,
       "Name": "Advertising",
-      "Path": "1/5/148",
+      "Path": "/1/5/148/",
       "Order": 5
     },
     {
       "Id": 150,
       "Name": "Book/Periodicals printing",
-      "Path": "1/5/150",
+      "Path": "/1/5/150/",
       "Order": 10
     },
     {
       "Id": 145,
       "Name": "Labelling and packaging printing",
-      "Path": "1/5/145",
+      "Path": "/1/5/145/",
       "Order": 15
     },
     {
       "Id": 7,
       "Name": "Textile and Clothing",
-      "Path": "1/7",
+      "Path": "/1/7/",
       "Order": 45
     },
     {
       "Id": 44,
       "Name": "Clothing",
-      "Path": "1/7/44",
+      "Path": "/1/7/44/",
       "Order": 5
     },
     {
       "Id": 45,
       "Name": "Textile",
-      "Path": "1/7/45",
+      "Path": "/1/7/45/",
       "Order": 10
     },
     {
       "Id": 8,
       "Name": "Wood",
-      "Path": "1/8",
+      "Path": "/1/8/",
       "Order": 50
     },
     {
       "Id": 337,
       "Name": "Other (Wood)",
-      "Path": "1/8/337",
+      "Path": "/1/8/337/",
       "Order": 5
     },
     {
       "Id": 51,
       "Name": "Wooden building materials",
-      "Path": "1/8/51",
+      "Path": "/1/8/51/",
       "Order": 10
     },
     {
       "Id": 47,
       "Name": "Wooden houses",
-      "Path": "1/8/47",
+      "Path": "/1/8/47/",
       "Order": 15
     },
     {
       "Id": 3,
       "Name": "Other",
-      "Path": "3",
+      "Path": "/3/",
       "Order": 10
     },
     {
       "Id": 37,
       "Name": "Creative industries",
-      "Path": "3/37",
+      "Path": "/3/37/",
       "Order": 5
     },
     {
       "Id": 29,
       "Name": "Energy technology",
-      "Path": "3/29",
+      "Path": "/3/29/",
       "Order": 10
     },
     {
       "Id": 33,
       "Name": "Environment",
-      "Path": "3/33",
+      "Path": "/3/33/",
       "Order": 15
     },
     {
       "Id": 2,
       "Name": "Service",
-      "Path": "2",
+      "Path": "/2/",
       "Order": 15
     },
     {
       "Id": 25,
       "Name": "Business services",
-      "Path": "2/25",
+      "Path": "/2/25/",
       "Order": 5
     },
     {
       "Id": 35,
       "Name": "Engineering",
-      "Path": "2/35",
+      "Path": "/2/35/",
       "Order": 10
     },
     {
       "Id": 28,
       "Name": "Information Technology and Telecommunications",
-      "Path": "2/28",
+      "Path": "/2/28/",
       "Order": 15
     },
     {
       "Id": 581,
       "Name": "Data processing, Web portals, E-marketing",
-      "Path": "2/28/581",
+      "Path": "/2/28/581/",
       "Order": 5
     },
     {
       "Id": 576,
       "Name": "Programming, Consultancy",
-      "Path": "2/28/576",
+      "Path": "/2/28/576/",
       "Order": 10
     },
     {
       "Id": 121,
       "Name": "Software, Hardware",
-      "Path": "2/28/121",
+      "Path": "/2/28/121/",
       "Order": 15
     },
     {
       "Id": 122,
       "Name": "Telecommunications",
-      "Path": "2/28/122",
+      "Path": "/2/28/122/",
       "Order": 20
     },
     {
       "Id": 22,
       "Name": "Tourism",
-      "Path": "2/22",
+      "Path": "/2/22/",
       "Order": 20
     },
     {
       "Id": 141,
       "Name": "Translation services",
-      "Path": "2/141",
+      "Path": "/2/141/",
       "Order": 25
     },
     {
       "Id": 21,
       "Name": "Transport and Logistics",
-      "Path": "2/21",
+      "Path": "/2/21/",
       "Order": 30
     },
     {
       "Id": 111,
       "Name": "Air",
-      "Path": "2/21/111",
+      "Path": "/2/21/111/",
       "Order": 5
     },
     {
       "Id": 114,
       "Name": "Rail",
-      "Path": "2/21/114",
+      "Path": "/2/21/114/",
       "Order": 10
     },
     {
       "Id": 112,
       "Name": "Road",
-      "Path": "2/21/112",
+      "Path": "/2/21/112/",
       "Order": 15
     },
     {
       "Id": 113,
       "Name": "Water",
-      "Path": "2/21/113",
+      "Path": "/2/21/113/",
       "Order": 20
     }
   ]

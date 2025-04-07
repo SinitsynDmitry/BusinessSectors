@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SectorsComponent } from './components/sectors/sectors.component';
 import { SectorsTreeComponent } from './components/sectors-tree/sectors-tree.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SectorsComponent,
-    SectorsTreeComponent
+    SectorsTreeComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

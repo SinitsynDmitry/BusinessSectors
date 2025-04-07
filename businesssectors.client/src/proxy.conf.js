@@ -11,8 +11,7 @@ console.log(`Proxying API requests to: ${target}`);
 const PROXY_CONFIG = [
   {
     context: [
-      "/weatherforecast",
-      "/api/sectors",
+      "/api",
       // Add other API paths here
     ],
     target,

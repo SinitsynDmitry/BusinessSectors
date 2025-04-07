@@ -1,38 +1,64 @@
+<!-- sectors.component.html -->
+<div *ngIf="isLoading" class="loading-container">
+  <mat-spinner diameter="40"></mat-spinner>
+  <p>Loading sectors...</p>
+</div>
 
-<p *ngIf="!sectors"><em>Loading...</em></p>
+<div *ngIf="!isLoading" class="container">
+  <form [formGroup]="sectorForm" class="sectors-form">
+    <!-- Name field (always visible) -->
+    <div class="name-login-container">
+      <mat-form-field class="form-field-full-width">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="name" placeholder="Enter name">
+        @if (nameFormControl.hasError('required') && nameFormControl.touched) {
+        <mat-error>Name is <strong>required!</strong></mat-error>
+        }
+      </mat-form-field>
 
-<div *ngIf="sectors" class="container">
-  <form class="sectors-form">
-    <mat-form-field class="form-field-full-width">
-      <mat-label>Name</mat-label>
-      <input type="text" matInput [formControl]="nameFormControl" placeholder="Enter name">
-      @if (nameFormControl.hasError('required')) {
-      <mat-error>Name is <strong>required!</strong></mat-error>
-      }
-    </mat-form-field>
-
-    <mat-label style="text-align: left; display: block; margin-top: 10px;">Sectors:</mat-label>
-    <div class="config-options">
-      <mat-checkbox [(ngModel)]="selectChildrenWithParent">
-        Select children when parent is selected
-      </mat-checkbox>
+      <!-- Login/Logout button -->
+      <button mat-raised-button style="margin-top: 8px;"
+              [color]="isLoggedIn ? 'warn' : 'primary'"
+              (click)="toggleLoginState()"
+              [disabled]="!isLoggedIn && (nameFormControl.invalid || isLoading)">
+        {{ isLoggedIn ? 'Log out' : 'Login' }}
+      </button>
     </div>
-    <div class="border rounded tree">
-      <app-sectors-tree [sectorNodes]="sectorNodes"
-                        [selectChildrenWithParent]="selectChildrenWithParent"
-                        [selectParentWithChildren]="selectChildrenWithParent"
-                        [showIndeterminateState]="selectChildrenWithParent"
-                        (selectedIdsChange)="onSelectedIdsChange($event)">
-      </app-sectors-tree>
-    </div>
-    <div class="buttons">
-      <button color="accent" mat-flat-button (click)="onRestore()">Restore</button>
-      <button color="primary" mat-flat-button (click)="onSave()">Save</button>
+    
+    <!-- Content visible only after login -->
+    <div *ngIf="isLoggedIn" class="sectors-content">
+      <h4>Please pick the Sectors you are currently involved in.</h4>
+      <mat-label style="text-align: left; display: block; margin-top: 10px;">Sectors:</mat-label>
+      <div class="border rounded tree">
+        <app-sectors-tree [sectorNodes]="sectorNodes"
+                          [selectChildrenWithParent]="selectChildrenWithParent"
+                          [selectParentWithChildren]="selectChildrenWithParent"
+                          [showIndeterminateState]="selectChildrenWithParent"
+                          (selectedIdsChange)="onSelectedIdsChange($event)">
+        </app-sectors-tree>
+      </div>
+      <div *ngIf="selectedIds.length === 0" class="no-selection-warning">
+        <em>Please select at least one sector</em>
+      </div>
+      <div class="config-options">
+        <mat-checkbox [(ngModel)]="selectChildrenWithParent" [ngModelOptions]="{standalone: true}">
+          Select children when parent is selected
+        </mat-checkbox>
+      </div>
+
+      <div class="buttons">
+        <button mat-raised-button color='primary' (click)="onRestore()" [disabled]="isLoading || isSaving">
+          Restore
+        </button>
+
+        <button mat-flat-button color='primary'  (click)="onSave()" [disabled]="isLoading || isSaving">
+          <span *ngIf="!isSaving">Save</span>
+          <span *ngIf="isSaving" class="button-with-spinner">
+            <mat-spinner diameter="20"></mat-spinner>
+            Saving...
+          </span>
+        </button>
+      </div>
     </div>
   </form>
-
-  <!--<div class="selected-info" *ngIf="selectedIds.length > 0">
-    <h3>Selected Sector IDs:</h3>
-    <p>{{ selectedIds.join(', ') }}</p>
-  </div>-->
 </div>

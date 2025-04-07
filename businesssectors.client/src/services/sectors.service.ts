@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-export interface Sector {
+ interface Sector {
   id: number;
   name: string;
   path: string;
@@ -28,21 +29,19 @@ export class SectorsService {
 
   constructor(private http: HttpClient) { }
 
-  getSectors(userName: string): Observable<Sector[]> {
+  getSectorNodes(userId: number): Observable<SectorNode[]> {
 
     let apiUrl = this.apiUrl;
-    if (userName) {
-      apiUrl = `${apiUrl}?userName=${userName}`;
+    if (userId) {
+      apiUrl = `${apiUrl}?userId=${userId}`;
     }
-    return this.http.get<Sector[]>(apiUrl);
+
+    return this.http.get<Sector[]>(apiUrl).pipe(
+      map((sectors: Sector[]) => this.convertSectorsToSectorNodes(sectors))
+    );
   }
 
-  saveSectorSelections(data: { name: string, selectedSectorIds: number[] }) {
-    return this.http.post<any>('your-api-endpoint', data);
-  }
-
-
-  convertSectorsToSectorNodes(sectors: Sector[]): SectorNode[] {
+  private convertSectorsToSectorNodes(sectors: Sector[]): SectorNode[] {
     // Create map to store all nodes for quick access
     const nodesMap = new Map<number, SectorNode>();
 
@@ -100,17 +99,6 @@ export class SectorsService {
 
     // Sort root nodes and their children
     sortNodesByOrder(rootNodes);
-
-    // Remove empty children arrays
-    //const cleanupEmptyChildren = (node: SectorNode) => {
-    //  if (node.children && node.children.length === 0) {
-    //    delete node.children;
-    //  } else if (node.children) {
-    //    node.children.forEach(cleanupEmptyChildren);
-    //  }
-    //};
-
-    //rootNodes.forEach(cleanupEmptyChildren);
 
     return rootNodes;
   }

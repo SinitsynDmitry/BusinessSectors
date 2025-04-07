@@ -16,9 +16,9 @@ public class SectorsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<SectorDto>>> GetSectors(string? userName)
+    public async Task<ActionResult<IEnumerable<SectorDto>>> GetSectors(int? userId)
     {
-        var sectors = await _repository.GetSectorsAsync(userName);
+        var sectors = await _repository.GetSectorsAsync(userId);
         return Ok(sectors);
     }
 }
