@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { SectorsComponent } from './components/sectors/sectors.component';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +9,7 @@ import { SectorsComponent } from './components/sectors/sectors.component';
   imports: [
     RouterOutlet,
     RouterLink,
-    RouterLinkActive,
-    SectorsComponent
+    RouterLinkActive
   ]
 })
 export class AppComponent {

@@ -1,7 +1,7 @@
 using BusinessSectors.Server.Data;
+using BusinessSectors.Server.Interfaces;
 using BusinessSectors.Server.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +13,6 @@ if (!string.IsNullOrEmpty(configDirPath) && File.Exists(configDirPath))
 
 // Add services to the container.
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
-//var connectionDB = builder.Configuration.GetConnectionString("DBConnection") ?? throw new InvalidOperationException($"Connection string DBConnection not found.");
-//builder.Services.AddDbContext<SectorsDbContext>(options => options.UseNpgsql(connectionDB));
 
 builder.AddServiceDefaults();
 
@@ -69,8 +67,7 @@ using (var scope = app.Services.CreateScope())
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{
-   
+{ 
     app.MapOpenApi();
 }
 

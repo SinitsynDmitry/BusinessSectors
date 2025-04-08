@@ -1,6 +1,8 @@
 ﻿using BusinessSectors.Server.Data;
 using BusinessSectors.Server.Data.Models;
+using BusinessSectors.Server.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace BusinessSectors.Server.Repository;
 
@@ -8,13 +10,25 @@ public class SectorsRepository : ISectorsRepository
 {
     private readonly SectorsDbContext _context;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SectorsRepository"/> class.
+    /// </summary>
+    /// <param name="context">The context.</param>
     public SectorsRepository(SectorsDbContext context)
     {
+        ArgumentNullException.ThrowIfNull(context);
         _context = context;
     }
 
-    public async ValueTask UpdateSectorsAsync(IEnumerable<Sector> sectors)
+    /// <summary>
+    /// Updates the sectors async.
+    /// </summary>
+    /// <param name="sectors">The sectors.</param>
+    /// <returns>A ValueTask.</returns>
+    public async ValueTask<bool> UpdateSectorsAsync(IEnumerable<Sector> sectors)
     {
+        ArgumentNullException.ThrowIfNull(sectors);
+
         using var transaction = await _context.Database.BeginTransactionAsync();
 
         try
@@ -22,61 +36,77 @@ public class SectorsRepository : ISectorsRepository
             var incomingSectors = sectors.ToList();
             var existingSectors = await _context.Sectors.AsNoTracking().ToListAsync();
 
-            var sectorsToRemove = existingSectors
-                .Where(s => !incomingSectors.Any(i => i.Id == s.Id))
-                .ToList();
+            // Create lookup collections
+            var existingIds = existingSectors.Select(s => s.Id).ToHashSet();
+            var incomingIds = incomingSectors.Select(s => s.Id).Where(id => id > 0).ToHashSet();
+
+            var sectorsToRemove = existingSectors.Where(s => !incomingIds.Contains(s.Id)).ToList();
             if (sectorsToRemove.Count > 0)
-                _context.Sectors.RemoveRange(sectorsToRemove);
-
-            var idMapping = new Dictionary<int, int>();
-            var addedSectors = new List<(Sector Original, Sector Entity)>();
-
-            foreach (var incoming in incomingSectors.Where(s => s.Id == 0 || !existingSectors.Any(e => e.Id == s.Id)))
             {
-                var entity = new Sector
-                {
-                    //Id = -1 * (addedSectors.Count+1), // New ID will be generated
-                    Name = incoming.Name,
-                    Path = incoming.Path,
-                    Order = incoming.Order
-                };
-
-                await _context.Sectors.AddAsync(entity);
-                await _context.SaveChangesAsync(); // Get new ID
-
-                //if (incoming.Id != 0)
-                    idMapping[incoming.Id] = entity.Id;
-
-                addedSectors.Add((incoming, entity));
+                _context.Sectors.RemoveRange(sectorsToRemove);
             }
 
-            // Update paths of children based on new ID mapping
-            foreach (var (original, entity) in addedSectors)
-            {
-                if (!idMapping.TryGetValue(original.Id, out var newId))
-                    continue;
+            // Process additions with temporary path storage
+            var newSectors = incomingSectors
+                .Where(s => s.Id == 0 || !existingIds.Contains(s.Id))
+                .Select(s => new
+                {
+                    OriginalId = s.Id,
+                    Entity = new Sector
+                    {
+                        Name = s.Name.Trim(),
+                        Path = s.Path,
+                        Order = s.Order
+                    }
+                })
+                .ToList();
 
-                var oldSegment = $"/{original.Id}/";
+            // Bulk add new sectors
+            foreach (var item in newSectors)
+            {
+                await _context.Sectors.AddAsync(item.Entity);
+            }
+            await _context.SaveChangesAsync();
+
+            // Create ID mapping for path updates
+            var idMapping = newSectors
+                .Where(x => x.OriginalId != 0)
+                .ToDictionary(x => x.OriginalId, x => x.Entity.Id);
+
+            // Batch update paths
+            foreach (var (oldId, newId) in idMapping)
+            {
+                var oldSegment = $"/{oldId}/";
                 var newSegment = $"/{newId}/";
 
-                foreach (var sector in _context.Sectors.Local.Where(s => s.Path.Contains(oldSegment)))
+                var affectedSectors = _context.Sectors.Local
+                    .Where(s => s.Path.Contains(oldSegment))
+                    .ToList();
+
+                foreach (var sector in affectedSectors)
+                {
                     sector.Path = sector.Path.Replace(oldSegment, newSegment);
+                }
             }
 
-            // Update existing
-            foreach (var incoming in incomingSectors.Where(s => s.Id > 0))
-            {
-                var existing = await _context.Sectors.FindAsync(incoming.Id);
-                if (existing == null)
-                    continue;
+            // Process updates for existing sectors
+            var sectorsToUpdate = incomingSectors
+                .Where(s => s.Id > 0 && existingIds.Contains(s.Id))
+                .ToList();
 
+            foreach (var incoming in sectorsToUpdate)
+            {
+                var existing = existingSectors.First(s => s.Id == incoming.Id);
                 existing.Name = incoming.Name;
                 existing.Path = incoming.Path;
                 existing.Order = incoming.Order;
+                _context.Entry(existing).State = EntityState.Modified;
             }
 
-            await _context.SaveChangesAsync();
+            var changesSaved = await _context.SaveChangesAsync() > 0;
             await transaction.CommitAsync();
+
+            return changesSaved || sectorsToRemove.Count > 0 || newSectors.Count > 0;
         }
         catch
         {
@@ -85,49 +115,52 @@ public class SectorsRepository : ISectorsRepository
         }
     }
 
-
+    /// <summary>
+    /// Gets the sectors async.
+    /// </summary>
+    /// <param name="userId">The user id.</param>
+    /// <returns>A ValueTask.</returns>
     public async ValueTask<IEnumerable<Sector>> GetSectorsAsync(int? userId)
     {
-
-        var sectorsQuery = _context.Sectors.AsNoTracking();
-        var sectors = await sectorsQuery.ToListAsync();
-
-        // Return all sectors if no user specified
-        if (userId is null || userId < 1)
+        try
         {
-            return sectors;
-        }
+            var sectors = await _context.Sectors.AsNoTracking().ToListAsync();
 
-        // Execute both queries in parallel
-        var sectorsIdsString = await _context.UserSectors
-            .AsNoTracking()
-            .Where(u => u.Id == userId)
-            .Select(u => u.SectorsIds)
-            .FirstOrDefaultAsync();
-
-        if (string.IsNullOrWhiteSpace(sectorsIdsString))
-        {
-            return sectors;
-        }
-
-
-        var userSectorIds = sectorsIdsString
-            .Split(',', StringSplitOptions.RemoveEmptyEntries)
-            .Select(idStr => int.TryParse(idStr, out var id) ? id : -1)
-            .Where(id => id > 0)
-            .ToHashSet();
-
-
-        if (userSectorIds.Count > 0)
-        {
-            foreach (var sector in sectors)
+            if (userId is null or <= 0)
             {
-                sector.IsSelected = userSectorIds.Contains(sector.Id);
+                return sectors;
             }
+
+            var sectorsIdsString = await _context.UserSectors
+                .AsNoTracking()
+                .Where(u => u.Id == userId)
+                .Select(u => u.SectorsIds)
+                .FirstOrDefaultAsync();
+
+            if (string.IsNullOrWhiteSpace(sectorsIdsString))
+            {
+                return sectors;
+            }
+
+            var userSectorIds = sectorsIdsString
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(idStr => int.TryParse(idStr, out var id) ? id : -1)
+                .Where(id => id > 0)
+                .ToHashSet();
+
+            if (userSectorIds.Count > 0)
+            {
+                foreach (var sector in sectors)
+                {
+                    sector.IsSelected = userSectorIds.Contains(sector.Id);
+                }
+            }
+
+            return sectors;
         }
-
-        return sectors;
+        catch (Exception ex)
+        {
+            throw new ValidationException("Failed to retrieve sectors", ex);
+        }
     }
-
-
 }

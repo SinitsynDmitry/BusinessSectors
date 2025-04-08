@@ -1,0 +1,31 @@
+{
+  "projectPath": ".",
+  "outputPath": "aspirate-output",
+  "containerImageTags": [
+    "latest"
+  ],
+  "containerBuilder": "docker",
+  "outputFormat": "compose",
+  "privateRegistryEmail": "aspir8@aka.ms",
+  "includeDashboard": true,
+  "secrets": {
+    "salt": "8Cr4NHiTJP837yza",
+    "hash": "V19wNvAshAn/028a2mLxEFfvg2WsvGovr\u002ByNCxlGV\u002BI=",
+    "secrets": {
+      "db-username": {
+        "value": "8Cr4NHiTJP837yzagRtZT9zE1fgI74Nz8vRHybW8nQQIBQDr"
+      },
+      "db-password": {
+        "value": "8Cr4NHiTJP837yza/OLCt2ZmguykUuAkHsgf0o6ZpRsFHFSqAg=="
+      },
+      "db": {
+        "POSTGRES_PASSWORD": "8Cr4NHiTJP837yza/OLCt2ZmguykUuAkHsgf0o6ZpRsFHFSqAg=="
+      },
+      "sectorsDb": {},
+      "businesssectors": {
+        "ConnectionStrings__sectorsDb": "8Cr4NHiTJP837yzauyrThnNsLOobDUz0YUdZlo28nQRSEwejYUFMoAaHdTB5PJbgmOew1qrpEjQdA94AdDNYl\u002BlW8WB8dp/V6ebERPLp7sn0pGsaLsp76dAIrANrT20N\u002BdgIyeY="
+      }
+    }
+  },
+  "processAllComponents": true
+}

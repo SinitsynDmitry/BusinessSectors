@@ -8,6 +8,12 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\businesssectors.client\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="nginx.conf" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="src\app\components\sectors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptConfiguration Include="nginx.conf" />
   </ItemGroup>
 </Project>

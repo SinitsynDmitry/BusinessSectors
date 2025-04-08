@@ -1,46 +1,28 @@
-﻿using System.Reflection.Metadata;
-using BusinessSectors.Server.Data.Models;
+﻿using BusinessSectors.Server.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessSectors.Server.Data;
 
+
+/// <summary>
+/// The sectors db context.
+/// </summary>
 public class SectorsDbContext : DbContext
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SectorsDbContext"/> class.
+    /// </summary>
+    /// <param name="options">The options.</param>
     public SectorsDbContext(DbContextOptions options)
         : base(options) { }
 
+    /// <summary>
+    /// Gets or sets the sectors.
+    /// </summary>
     public DbSet<Sector> Sectors { get; set; }
 
+    /// <summary>
+    /// Gets or sets the user sectors.
+    /// </summary>
     public DbSet<UserSectors> UserSectors { get; set; }
-
-    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //{
-    //    modelBuilder.Entity<Sector>(entity =>
-    //    {
-    //        entity.HasKey(s => s.Id);
-
-    //        entity.Property(s => s.Id).ValueGeneratedOnAdd();
-
-    //        entity.Property(s => s.Order);
-
-    //        entity.Property(s => s.Name).IsRequired().HasMaxLength(255);
-
-    //        entity.Property(s => s.Path).IsRequired().HasMaxLength(1000); // Adjust based on max expected depth
-
-    //        // Index for faster path-based queries
-    //        entity.HasIndex(s => s.Path);
-    //    });
-
-    //    modelBuilder.Entity<UserSectors>(entity =>
-    //    {
-    //        entity.HasKey(s => s.Id);
-
-    //        entity.Property(s => s.Name).IsRequired().HasMaxLength(255);
-
-    //        entity.Property(s => s.SectorsIds).HasMaxLength(1000); // Adjust based on max expected depth
-
-    //        entity.HasIndex(s => s.Name);
-    //    });
-
-    //}
 }

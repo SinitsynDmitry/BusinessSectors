@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json.schemastore.org/aspire-8.0.json",
+  "resources": {
+    "db-username": {
+      "type": "parameter.v0",
+      "value": "{db-username.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string",
+          "secret": true
+        }
+      }
+    },
+    "db-password": {
+      "type": "parameter.v0",
+      "value": "{db-password.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string",
+          "secret": true
+        }
+      }
+    },
+    "db": {
+      "type": "container.v0",
+      "connectionString": "Host={db.bindings.tcp.host};Port={db.bindings.tcp.port};Username={db-username.value};Password={db-password.value}",
+      "image": "docker.io/library/postgres:17.2",
+      "env": {
+        "POSTGRES_HOST_AUTH_METHOD": "scram-sha-256",
+        "POSTGRES_INITDB_ARGS": "--auth-host=scram-sha-256 --auth-local=scram-sha-256",
+        "POSTGRES_USER": "{db-username.value}",
+        "POSTGRES_PASSWORD": "{db-password.value}"
+      },
+      "bindings": {
+        "tcp": {
+          "scheme": "tcp",
+          "protocol": "tcp",
+          "transport": "tcp",
+          "targetPort": 5432
+        }
+      }
+    },
+    "sectorsDb": {
+      "type": "value.v0",
+      "connectionString": "{db.connectionString};Database=sectorsDb"
+    },
+    "businesssectors": {
+      "type": "project.v0",
+      "path": "../BusinessSectors.Server/BusinessSectors.Server.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true",
+        "HTTP_PORTS": "{businesssectors.bindings.http.targetPort}",
+        "SectorsConfigPath": "E:\\My\\DigiVikings\\BusinessSectors\\config\\sectors-config.json",
+        "ConnectionStrings__sectorsDb": "{sectorsDb.connectionString}"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http"
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http"
+        }
+      }
+    },
+    "frontend": {
+      "type": "executable.v0",
+      "workingDirectory": "../businesssectors.client",
+      "command": "npm",
+      "args": [
+        "run",
+        "start"
+      ],
+      "env": {
+        "NODE_ENV": "development",
+        "services__businesssectors__http__0": "{businesssectors.bindings.http.url}",
+        "services__businesssectors__https__0": "{businesssectors.bindings.https.url}",
+        "API_URL": "{businesssectors.bindings.https.url}"
+      }
+    }
+  }
+}

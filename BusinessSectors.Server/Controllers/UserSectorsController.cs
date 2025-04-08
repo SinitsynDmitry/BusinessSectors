@@ -1,68 +1,90 @@
 ﻿using BusinessSectors.Server.Data.Models;
-using BusinessSectors.Server.Repository;
+using BusinessSectors.Server.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 [ApiController]
 [Route("api/[controller]")]
+[Produces("application/json")]
 public class UserSectorsController : ControllerBase
 {
     private readonly IUserSectorsRepository _repository;
+    private readonly ILogger<UserSectorsController> _logger;
 
-    public UserSectorsController(IUserSectorsRepository repository)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UserSectorsController"/> class.
+    /// </summary>
+    /// <param name="repository">The repository.</param>
+    /// <param name="logger">The logger.</param>
+    public UserSectorsController(
+        IUserSectorsRepository repository,
+        ILogger<UserSectorsController> logger)
     {
+        ArgumentNullException.ThrowIfNull(repository);
+        ArgumentNullException.ThrowIfNull(logger);
         _repository = repository;
+        _logger = logger;
     }
 
+    /// <summary>
+    /// Gets user sectors by name
+    /// </summary>
     [HttpGet("{name}")]
+    [ProducesResponseType(typeof(UserSectors), 200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<UserSectors>> GetUserSectors(string name)
     {
         var userSectors = await _repository.GetByNameAsync(name);
         return userSectors != null ? Ok(userSectors) : NotFound();
     }
 
-    [HttpPost]
-    public async Task<ActionResult<UserSectors>> CreateUserSectors(
-        [FromBody] CreateUserSectorsRequest request)
-    {
-        if (await _repository.NameExistsAsync(request.Name))
-        {
-            return Conflict("User with this name already exists");
-        }
-
-        var userSectors = await _repository.CreateAsync(request.Name, request.SectorsIds);
-        return CreatedAtAction(nameof(GetUserSectors), new { name = userSectors.Name }, userSectors);
-    }
-
+    /// <summary>
+    /// Updates user sectors
+    /// </summary>
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateUserSectors(
-        int id,
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
+    public async Task<ActionResult<ApiResponse>> UpdateUserSectors(
+        [FromRoute, Range(1, int.MaxValue)] int id,
         [FromBody] UpdateUserSectorsRequest request)
     {
-        var existing = await _repository.GetByIdAsync(id);
-        if (existing == null)
+        _logger.LogInformation("Updating sectors for user {UserId}", id);
+
+        if (!ModelState.IsValid)
         {
-            return NotFound();
+            return BadRequest(new ApiResponse(false, "Invalid request", ModelState));
         }
 
-        await _repository.UpdateSectorsAsync(id, request.SectorsIds);
-        return NoContent();
+        try
+        {
+            var existing = await _repository.GetByIdAsync(id);
+            if (existing == null)
+            {
+                return NotFound(new ApiResponse(false, $"User with ID {id} not found"));
+            }
+
+            var success = await _repository.UpdateSectorsAsync(id, request.SectorsIds);
+            return success ? NoContent() : BadRequest(new ApiResponse(false, "Update failed"));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating user sectors");
+            return BadRequest(new ApiResponse(false, "An error occurred"));
+        }
     }
 }
 
-public class CreateUserSectorsRequest
-{
-    [Required]
-    [StringLength(255)]
-    public string Name { get; set; }
-
-    [StringLength(1000)]
-    public string? SectorsIds { get; set; }
-}
+public record ApiResponse(bool Success, string Message = "", object? Data = null);
 
 public class UpdateUserSectorsRequest
 {
-    [Required]
-    [StringLength(1000)]
-    public string SectorsIds { get; set; }
+    /// <summary>
+    /// Gets or sets the sectors ids.
+    /// </summary>
+    [Required(ErrorMessage = "SectorsIds is required")]
+    [RegularExpression(@"^(\d+,)*\d+$", ErrorMessage = "Comma-separated numbers expected")]
+    public string SectorsIds { get; set; } = string.Empty;
 }

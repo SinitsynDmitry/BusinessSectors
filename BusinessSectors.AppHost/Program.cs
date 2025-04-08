@@ -4,6 +4,10 @@ using Microsoft.Extensions.Configuration.Json;
 
 internal class Program
 {
+    /// <summary>
+    /// Mains the.
+    /// </summary>
+    /// <param name="args">The args.</param>
     private static void Main(string[] args)
     {
         var builder = DistributedApplication.CreateBuilder(args);

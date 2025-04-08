@@ -15,6 +15,11 @@ namespace Microsoft.Extensions.Hosting;
 // To learn more about using this project, see https://aka.ms/dotnet/aspire/service-defaults
 public static class Extensions
 {
+    /// <summary>
+    /// Adds the service defaults.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
+    /// <returns>A TBuilder.</returns>
     public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.ConfigureOpenTelemetry();
@@ -41,6 +46,11 @@ public static class Extensions
         return builder;
     }
 
+    /// <summary>
+    /// Configures the open telemetry.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
+    /// <returns>A TBuilder.</returns>
     public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.Logging.AddOpenTelemetry(logging =>
@@ -70,6 +80,11 @@ public static class Extensions
         return builder;
     }
 
+    /// <summary>
+    /// Adds the open telemetry exporters.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
+    /// <returns>A TBuilder.</returns>
     private static TBuilder AddOpenTelemetryExporters<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
@@ -89,6 +104,11 @@ public static class Extensions
         return builder;
     }
 
+    /// <summary>
+    /// Adds the default health checks.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
+    /// <returns>A TBuilder.</returns>
     public static TBuilder AddDefaultHealthChecks<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.Services.AddHealthChecks()
@@ -98,6 +118,11 @@ public static class Extensions
         return builder;
     }
 
+    /// <summary>
+    /// Maps the default endpoints.
+    /// </summary>
+    /// <param name="app">The app.</param>
+    /// <returns>A WebApplication.</returns>
     public static WebApplication MapDefaultEndpoints(this WebApplication app)
     {
         // Adding health checks endpoints to applications in non-development environments has security implications.

@@ -21,11 +21,6 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}/${encodeURIComponent(name)}`);
   }
 
-  // Create new user sectors
-  createUserSectors(name: string, sectorsIds: string | null): Observable<User> {
-    return this.http.post<User>(this.apiUrl, { name, sectorsIds });
-  }
-
   // Update existing user sectors
   updateUserSectors(id: number, sectorsIds: string): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}`, { sectorsIds });
