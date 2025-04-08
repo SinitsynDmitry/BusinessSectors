@@ -1,7 +1,3 @@
-
-
-using Microsoft.Extensions.Configuration.Json;
-
 internal class Program
 {
     /// <summary>
